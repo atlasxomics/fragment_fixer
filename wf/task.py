@@ -11,7 +11,7 @@ from wf.utils import chromsize_paths, Genome, load_chromsizes, OutputType
 
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
-    level=logging.INFO,
+    level=logging.WARNING,
     handlers=[
         logging.FileHandler("wf.log"),
         logging.StreamHandler()
@@ -87,6 +87,7 @@ def ff_task(
         input_file.local_path,
         load_chromsizes(chromsize_paths[genome.value])
     )
+
     output_filename = save_frags(filtered_df, output_type.value, run_id)
 
     os.makedirs(output_dir, exist_ok=True)
