@@ -21,13 +21,14 @@ arg DEBIAN_FRONTEND=noninteractive
 
 # Latch SDK
 # DO NOT REMOVE
-run pip install latch==2.50.4 pandas==2.1.1 numpy==1.26.4
-run mkdir /opt/latch
+RUN pip install latch==2.50.4 pandas==2.1.1 numpy==1.26.4
+RUN mkdir /opt/latch
 
+RUN apt-get install -y tabix
 
 # Copy workflow data (use .dockerignore to skip files)
 
-copy . /root/
+COPY . /root/
 
 
 # Latch workflow registration metadata
