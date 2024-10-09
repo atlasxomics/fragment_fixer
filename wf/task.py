@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import subprocess
 
-from latch.resources.tasks import medium_task
+from latch.resources.tasks import custom_task
 from latch.types import LatchDir, LatchFile
 
 from wf.utils import chromsize_paths, Genome, load_chromsizes, OutputType
@@ -74,7 +74,7 @@ def save_frags(
     return file_name
 
 
-@medium_task
+@custom_task(cpu=32, memory=384, storage_gib=4949)
 def ff_task(
     input_file: LatchFile,
     run_id: str,
@@ -83,11 +83,13 @@ def ff_task(
     output_dir: str
 ) -> LatchDir:
 
+    logging.info("Filtering OOB...")
     filtered_df = filter_oob(
         input_file.local_path,
         load_chromsizes(chromsize_paths[genome.value])
     )
 
+    logging.info("Saving new fragment files...")
     output_filename = save_frags(filtered_df, output_type.value, run_id)
 
     os.makedirs(output_dir, exist_ok=True)
