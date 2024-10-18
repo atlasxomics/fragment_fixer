@@ -34,6 +34,7 @@ def call_oob(row: pd.Series, chromsizes: dict) -> bool:
             return True
     else:
         logging.warning(f"Wrong chromosome found: {(chrom, start, end)}")
+        return False
 
 
 def filter_oob(input_file: LatchFile, chromsizes: dict) -> pd.DataFrame:
